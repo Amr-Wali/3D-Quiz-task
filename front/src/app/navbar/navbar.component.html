@@ -7,7 +7,9 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link" routerLinkActive="active" [routerLink]="['/profile']">Home</a>
-      <a class="nav-item nav-link" routerLinkActive="active" [routerLink]="['/newquiz']">New Quiz</a>
+    </div>
+    <div class="navbar-nav">
+      <a class="nav-item nav-link">Welcome {{name}}</a>
     </div>
     <div class="navbar-nav ml-auto">
       <button class="nav-item nav-link btn" (click)="onLogout()">Logout</button>

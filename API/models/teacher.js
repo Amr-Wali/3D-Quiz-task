@@ -44,7 +44,8 @@ teacherSchema.pre('save', function (next) {
 teacherSchema.methods.generateJwt = function () {
     return jwt.sign(
         {
-            _id: this._id
+            _id: this._id,
+            name: this.fullName
         }, secret,
         {
             expiresIn: Jwt_expireTime
