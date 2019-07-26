@@ -1,0 +1,98 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="Error" class="alert alert-danger" role="alert">
+  <p>{{Error}}</p>
+</div>
+
+<div class="container justify-content-md-center">
+  <form #quizForm="ngForm" (ngSubmit)="quizForm.valid && createQuiz(quizForm)">
+    <table class="table table-striped table-inverse table-responsive m-auto">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Create New Quiz</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="text" name="title" #title="ngModel" [(ngModel)]="quizTitle" placeholder="Quiz title" required
+              [ngClass]="{'form-control':true, 'invalid' :quizForm.submitted && !title.valid }">
+            <div *ngIf="quizForm.submitted && !title.valid">
+              <label class="text-danger">Quiz title is required</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="submit" class="btn btn-success" value="Create">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+
+  <div class="row">
+
+    <div class="container col">
+      <table class="table table-striped table-inverse table-responsive">
+        <thead class="thead-inverse">
+          <tr>
+            <th colspan="3">Unpublished Quizzes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="unpublished.length==0">
+            <td colspan="3">
+              <div class="alert alert-info text-center" role="alert">
+                <strong>No published quizzes</strong>
+              </div>
+            </td>
+          </tr>
+          <tr *ngFor="let quiz of unpublished">
+            <td>
+              {{quiz.title}}
+            </td>
+            <td>
+              <button type="button" (click)="view(quiz._id)" class="btn btn-primary">View</button>
+            </td>
+            <td>
+              <button type="button" (click)="delete(quiz._id)" class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container col">
+      <table class="table table-striped table-inverse table-responsive">
+        <thead class="thead-inverse">
+          <tr>
+            <th colspan="3">Published Quizzes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="published.length==0">
+            <td>
+              <div class="alert alert-info text-center" role="alert">
+                <strong>No unpublished quizzes</strong>
+              </div>
+            </td>
+          </tr>
+          <tr *ngFor="let quiz of published">
+            <td>
+              {{quiz.title}}
+            </td>
+            <td>
+              <button type="button" (click)="view(quiz._id)" class="btn btn-primary">View</button>
+            </td>
+            <td>
+              <button type="button" (click)="delete(quiz._id)" class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,68 @@
+<app-navbar></app-navbar>
+
+<div *ngIf="Error" class="alert alert-danger" role="alert">
+    <p>{{Error}}</p>
+</div>
+
+<div class="container">
+    <div class="container text-center mt-3 mb-3">
+        <h2>{{quiz?.title}}</h2>
+        <button *ngIf="!quiz?.published" type="button" class="form-control btn btn-success"
+            (click)="publish()">Publish</button>
+    </div>
+    <div class="row">
+        <div *ngIf="!quiz?.published" class="container col">
+            <form #questionForm="ngForm" (ngSubmit)="questionForm.valid && createQuestion(questionForm)">
+                <div class="form-group">
+                    <label for="question">Question</label>
+                    <input type="text" name="body" #question="ngModel" [(ngModel)]="question.body" id="question"
+                        placeholder="Question" required
+                        [ngClass]="{'form-control':true, 'invalid' :questionForm.submitted && !question.valid }">
+                    <div *ngIf="questionForm.submitted && !question.valid">
+                        <label class="text-danger">Question is required</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <tag-input name="answers" #answers="ngModel" [(ngModel)]='question.answers' placeholder="+ Answer"
+                        secondaryPlaceholder="Enter the answers" maxItems=5 [modelAsStrings]="true" required
+                        [ngClass]="{'invalid' :questionForm.submitted && !answers.valid }">
+                    </tag-input>
+                    <div *ngIf="questionForm.submitted && !answers.valid">
+                        <label class="text-danger">You didn't provide any answers</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="correctAnswer">Correct Answer</label>
+                    <input type="text" name="correctAnswer" #correctAnswer="ngModel"
+                        [(ngModel)]="question.correctAnswer" id="correctAnswer" placeholder="Correct Answer" required
+                        [ngClass]="{'form-control':true, 'invalid' :questionForm.submitted && !correctAnswer.valid }">
+                    <div *ngIf="questionForm.submitted && !correctAnswer.valid">
+                        <label class="text-danger">You didn't provide correct answer is required</label>
+                    </div>
+                </div>
+                <input type="submit" class="btn btn-success" value="Add">
+            </form>
+        </div>
+
+        <div class="container col">
+
+            <h2>Questions</h2>
+            <div class="alert alert-info text-center" role="alert" *ngIf="questions.length==0">
+                <strong>No Questions yet</strong>
+            </div>
+            <div class="card text-black bg-light" *ngFor="let question of questions">
+                <div class="card-body">
+                    <h4 class="card-title">Question:{{question.body}}</h4>
+                    <p class="card-text">Answers:{{question.answers}}</p>
+                    <p class="card-text">Correct Answer:{{question.correctAnswer}}</p>
+                    <button *ngIf="!quiz?.published" type="button" (click)="delete(question._id)"
+                        class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
