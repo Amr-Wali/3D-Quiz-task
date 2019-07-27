@@ -11,7 +11,8 @@ let QuestionSchema = new mongoose.Schema({
         ], required: "There must be answers"
     },
     correctAnswer: { type: String, required: "You forgot to provide the correct answer" },
-    quiz: { type: ObjectId, ref: "Quiz", required: "There must be quiz for this question" }
+    quiz: { type: ObjectId, ref: "Quiz", required: "There must be quiz for this question" },
+    explanation: { type: String, required: "There must be explanation for the quiz" },
 });
 
 QuestionSchema.index({ body: 1, quiz: 1 }, { unique: true });

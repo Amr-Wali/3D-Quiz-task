@@ -1,8 +1,15 @@
 <app-navbar></app-navbar>
 
-<div *ngIf="Error" class="alert alert-danger" role="alert">
-  <p>{{Error}}</p>
+<div *ngIf="Error" class="alert alert-danger alert-dismissible fade show" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <strong>{{Error}}</strong>
 </div>
+
+<script>
+  $(".alert").alert();
+</script>
 
 <div class="container justify-content-md-center">
   <form #quizForm="ngForm" (ngSubmit)="quizForm.valid && createQuiz(quizForm)">
@@ -44,7 +51,7 @@
           <tr *ngIf="unpublished.length==0">
             <td colspan="3">
               <div class="alert alert-info text-center" role="alert">
-                <strong>No published quizzes</strong>
+                <strong>No unpublished quizzes</strong>
               </div>
             </td>
           </tr>

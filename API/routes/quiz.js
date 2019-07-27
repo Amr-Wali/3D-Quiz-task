@@ -61,8 +61,11 @@ quizRoutes.get("/", (req, res, next) => {
 // Get a quiz questions 
 quizRoutes.get("/:id", (req, res, next) => {
     let quiz = {};
-    Quiz.findById(req.params.id, (err, result) => {
+    Quiz.findOne({ _id: req.params.id }, (err, result) => {
         if (!err) {
+            if (!result) {
+                res.status(404).send({ message: "No such a quiz" });
+            }
             quiz.quiz = result;
             Question.find({ quiz: req.params.id }, (err, result) => {
                 if (err) {

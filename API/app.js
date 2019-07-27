@@ -49,6 +49,10 @@ app.use((err, req, res, next) => {
         Object.keys(err.errors).forEach(key => valErrors.push(err.errors[key].message));
         res.status(422).send(valErrors)
     }
+    else if (err.name === 'CastError') {
+
+        res.status(404).send({ message: "Invalid id" })
+    }
     else {
         console.log(err)
         res.status(401).json({ message: "Something went wrong" })

@@ -21,12 +21,16 @@ export class QuizComponent implements OnInit {
 
   handleError(err) {
     {
+      console.log(err)
+
       if (err.status === 422) {
-        console.log(err)
         this.Error = err.error.join('<br/>');
       }
       else if (err.status === 0) {
         this.Error = "Sorry, there is a problem with the server try again later"
+      }
+      else if (err.error.message == "No such a quiz" || err.error.message == "Invalid id") {
+        this.router.navigateByUrl('/404');
       }
       else {
         console.log(err);
@@ -76,6 +80,7 @@ export class QuizComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.Error = null;
     this.id = this.activeRoute.snapshot.params['id'];
     this.quizService.getQuiz(this.id).subscribe(result => {
       let myQuiz: any = result;

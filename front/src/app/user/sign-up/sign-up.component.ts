@@ -20,11 +20,13 @@ export class SignUpComponent implements OnInit {
       res => {
         this.userService.setToken(res['token']);
         this.router.navigateByUrl('/profile');
+        this.resetForm(form);
       },
       err => {
         if (err.status === 422) {
           console.log(err)
           this.serverErrorMessages = err.error.join('<br/>');
+
         }
         else
           this.serverErrorMessages = 'Sorry, Something went wrong. Try again later';
@@ -45,6 +47,7 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {
     if (this.userService.isLoggedIn())
       this.router.navigateByUrl('/profile');
+
   }
 
 }

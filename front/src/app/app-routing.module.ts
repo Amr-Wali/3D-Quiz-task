@@ -6,6 +6,7 @@ import { SignUpComponent } from './user/sign-up/sign-up.component';
 import { SignInComponent } from './user/sign-in/sign-in.component';
 import { AuthGuard } from './auth/auth.guard';
 import { TeacherProfileComponent } from './teacher-profile/teacher-profile.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,12 @@ const routes: Routes = [
   },
   {
     path: '', redirectTo: '/signup', pathMatch: 'full'
+  },
+  {
+    path: '404', component: NotFoundComponent
+  },
+  {
+    path: '**', redirectTo: '/404'
   }
 ];
 

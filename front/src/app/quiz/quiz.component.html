@@ -1,8 +1,15 @@
 <app-navbar></app-navbar>
 
-<div *ngIf="Error" class="alert alert-danger" role="alert">
-    <p>{{Error}}</p>
+<div *ngIf="Error" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>{{Error}}</strong>
 </div>
+
+<script>
+    $(".alert").alert();
+</script>
 
 <div class="container">
     <div class="container text-center mt-3 mb-3">
@@ -39,9 +46,20 @@
                         [(ngModel)]="question.correctAnswer" id="correctAnswer" placeholder="Correct Answer" required
                         [ngClass]="{'form-control':true, 'invalid' :questionForm.submitted && !correctAnswer.valid }">
                     <div *ngIf="questionForm.submitted && !correctAnswer.valid">
-                        <label class="text-danger">You didn't provide correct answer is required</label>
+                        <label class="text-danger">You didn't provide correct answer</label>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="explanation">Explanation</label>
+                    <input type="text" name="explanation" #explanation="ngModel" [(ngModel)]="question.explanation"
+                        id="explanation" placeholder="Explanation" required
+                        [ngClass]="{'form-control':true, 'invalid' :questionForm.submitted && !explanation.valid }">
+                    <div *ngIf="questionForm.submitted && !explanation.valid">
+                        <label class="text-danger">You didn't provide explanation for answer</label>
+                    </div>
+                </div>
+
                 <input type="submit" class="btn btn-success" value="Add">
             </form>
         </div>
@@ -54,9 +72,10 @@
             </div>
             <div class="card text-black bg-light" *ngFor="let question of questions">
                 <div class="card-body">
-                    <h4 class="card-title">Question:{{question.body}}</h4>
-                    <p class="card-text">Answers:{{question.answers}}</p>
-                    <p class="card-text">Correct Answer:{{question.correctAnswer}}</p>
+                    <h4 class="card-title">Question : {{question.body}}</h4>
+                    <p class="card-text">Answers : {{question.answers}}</p>
+                    <p class="card-text text-success">Correct Answer : {{question.correctAnswer}}</p>
+                    <p class="card-text">Explanation : {{question.explanation}}</p>
                     <button *ngIf="!quiz?.published" type="button" (click)="delete(question._id)"
                         class="btn btn-danger">Delete</button>
                 </div>
